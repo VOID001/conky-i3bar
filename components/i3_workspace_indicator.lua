@@ -25,7 +25,8 @@ return function (opt)
     for i, w in ipairs(new_workspaces) do
         workspaces[w['num']] = {
             ['num'] = w['num'],
-            ['visible'] = w['visible']
+            ['visible'] = w['visible'],
+            ['urgent'] = w['urgent']
         }
     end
 
@@ -116,20 +117,35 @@ return function (opt)
     ypos = ypos + 4
 
     -- display workspace 10 as workspace 0
-    if present_workspace_number == 10 then
-      present_workspace_number = 0
-    end
+    -- if present_workspace_number == 10 then
+    --   present_workspace_number = 10
+    -- end
+
+    local number_map = {"", "", "", "4", "5", "6", "7", "8", "9", "X"}
 
     r, g, b, a = 1, 1, 1, 1
-    cairo_move_to(opt.cr, xpos, ypos)
+    cairo_move_to(opt.cr, xpos - 3, ypos)
+    cairo_select_font_face(
+        opt.cr,
+        -- opt.primary_font,
+        "FontAwesome",
+        opt.primary_font_slant,
+        opt.primary_font_face)
+    cairo_set_font_size(opt.cr, opt.primary_font_size)
+    cairo_set_source_rgba(opt.cr, r, g, b, a)
+    if present_workspace_number < 4 then
+        cairo_show_text(opt.cr, number_map[present_workspace_number])      
+    else
+    cairo_move_to(opt.cr, xpos - 1, ypos)
     cairo_select_font_face(
         opt.cr,
         opt.primary_font,
         opt.primary_font_slant,
         opt.primary_font_face)
-    cairo_set_font_size(opt.cr, opt.primary_font_size)
-    cairo_set_source_rgba(opt.cr, r, g, b, a)
-    cairo_show_text(opt.cr, present_workspace_number)
+        cairo_show_text(opt.cr, number_map[present_workspace_number])
+    end
+
+
     cairo_stroke(opt.cr)
 
 end
