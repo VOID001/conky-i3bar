@@ -7,6 +7,7 @@ local i3bar_util = require 'util'
 return function (opt)
     local xpos = opt.x
     local ypos = opt.y
+    local hostpos = 0
 
     -- text color
     local r, g, b, a
@@ -29,30 +30,31 @@ return function (opt)
     end
 
     -- draw small text 'workspace'
-    ypos = ypos + 16
+    hostpos = ypos + 27
+    ypos = ypos + 24
     r, g, b, a = 0.9, 0.9, 0.9, 0.9
-    cairo_move_to(opt.cr, xpos, ypos)
+    cairo_move_to(opt.cr, xpos, hostpos)
     cairo_select_font_face(
         opt.cr,
         opt.primary_font,
         opt.primary_font_slant,
         opt.primary_font_face)
-    cairo_set_font_size(opt.cr, 9)
+    cairo_set_font_size(opt.cr, 20)
     cairo_set_source_rgba(opt.cr, r, g, b, a)
-    cairo_show_text(opt.cr, 'workspace')
+    cairo_show_text(opt.cr, 'ShakuganNoArch')
     cairo_stroke(opt.cr)
 
-    xpos = xpos + 48
-    ypos = ypos - 14
+    xpos = xpos + 190
+    ypos = ypos - 15
     i3bar_util.draw_svg({cr = opt.cr,
         x = xpos, y = ypos,
         file = opt.RESOURCE_PATH .. 'workspace-frame.svg'})
 
-    xpos = xpos + 34
+    xpos = xpos + 36
     -- upper indicator
     for i = 1,5 do
         -- shift right
-        xpos = xpos + 9
+        xpos = xpos + 10
         if workspaces[i] == nil then
             -- empty workspace
             i3bar_util.draw_svg({cr = opt.cr,
@@ -79,7 +81,7 @@ return function (opt)
         end
     end
 
-    xpos = xpos - 46
+    xpos = xpos - 50
     ypos = ypos + 14
     -- lower indicator
     for i = 6,10 do
@@ -110,8 +112,8 @@ return function (opt)
         end
     end
 
-    xpos = xpos - 53
-    ypos = ypos + 3
+    xpos = xpos - 58
+    ypos = ypos + 4
 
     -- display workspace 10 as workspace 0
     if present_workspace_number == 10 then

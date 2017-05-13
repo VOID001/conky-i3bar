@@ -4,29 +4,29 @@ conky.config = {
   out_to_x = true,
   out_to_console = false,
   own_window = true,
-  own_window_type = 'desktop',
+  own_window_type = 'panel',
   own_window_class = 'Conky',
-  own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+  own_window_hints = 'below,sticky,skip_taskbar,skip_pager',
   own_window_transparent = false,
   own_window_argb_visual = true,
-  own_window_argb_value = 0, -- 80
+  own_window_argb_value = 80, -- 80
   own_window_colour = nil,
   background = false, -- for debug
   double_buffer = true,
   use_xft = true,
-  max_text_width = 100,
-  draw_borders = false,
-  draw_graph_borders = false,
-  draw_outline = false,
-  draw_shades = false,
+  max_text_width = 50,
+  draw_borders = true,
+  draw_graph_borders = true,
+  draw_outline = true,
+  draw_shades = true,
 
-  minimum_height = 27,
+  minimum_height = 35,
 
   -- trayer as panel, conky floats on it
   -- conky problem: panel not using complete screen width
   -- https://bbs.archlinux.org/viewtopic.php?id=102598
-  minimum_width = 1720,
-  maximum_width = 1720,
+  minimum_width = 4000,
+  -- maximum_width = ,
   border_inner_margin = 0,
   border_outer_margin = 0,
   border_width = 0,
@@ -52,7 +52,7 @@ conky.config = {
 
 -- Add spaces to keep things from moving about?  This only affects certain objects.
 -- use_spacer should have an argument of left, right, or none
-  use_spacer = 'left',
+  use_spacer = 'none',
 
 -- Force UTF8? note that UTF8 support required XFT
   override_utf8_locale = true,
@@ -61,8 +61,10 @@ conky.config = {
 -- set to 1 to disable averaging
   cpu_avg_samples = 2,
 
-  lua_load = '~/.conky/conky-i3bar/i3bar.lua',
+  lua_load = '~/.config/conky/conky-i3bar/i3bar.lua',
   lua_draw_hook_post = 'i3bar',
+  format_human_readable = true,
+  -- font = "-misc-dejavu sans mono-bold-r-normal-*-17-120-0-100-m-0-iso10646-1"
 };
 
 conky.text = [[]]

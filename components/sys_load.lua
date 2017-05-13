@@ -18,7 +18,8 @@ return function (opt)
     local mem_total = conky_parse('${memmax}')
 
     -- draw small text 'sys'
-    ypos = ypos + 16
+    xpos = xpos + 130
+    ypos = ypos + 20
     r, g, b, a = 0.9, 0.9, 0.9, 0.9
     cairo_move_to(opt.cr, xpos, ypos)
     cairo_select_font_face(
@@ -26,12 +27,12 @@ return function (opt)
         opt.primary_font,
         opt.primary_font_slant,
         opt.primary_font_face)
-    cairo_set_font_size(opt.cr, 9)
+    cairo_set_font_size(opt.cr, 20)
     cairo_set_source_rgba(opt.cr, r, g, b, a)
     cairo_show_text(opt.cr, 'system')
     cairo_stroke(opt.cr)
 
-    xpos = xpos + 33
+    xpos = xpos + 80
     ypos = ypos - 16
     i3bar_util.draw_svg({cr = opt.cr,
         x = xpos, y = ypos,
@@ -72,7 +73,7 @@ return function (opt)
         opt.primary_font,
         opt.primary_font_slant,
         opt.primary_font_face)
-    cairo_set_font_size(opt.cr, 9)
+    cairo_set_font_size(opt.cr, 14)
     cairo_set_source_rgba(opt.cr, r, g, b, a)
     cairo_show_text(opt.cr, cpu_percent .. '%')
     cairo_stroke(opt.cr)

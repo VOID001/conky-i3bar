@@ -22,8 +22,9 @@ local RESOURCE_PATH = PROJECT_ROOT .. 'resource/'
 
 local i3bar_arch_logo = require 'components.arch_logo'
 local i3bar_i3_workspace_indicator = require 'components.i3_workspace_indicator'
+local i3bar_wireless_stat = require 'components.wireless_stat'
 local i3bar_sys_load = require 'components.sys_load'
-local i3bar_gpu_load = require 'components.gpu_load'
+-- local i3bar_gpu_load = require 'components.gpu_load'
 local i3bar_date_time = require 'components.date_time'
 local i3bar_clementine_play = require 'components.clementine_play'
 
@@ -42,8 +43,8 @@ function conky_i3bar() -- luacheck: ignore conky_i3bar
     local updates = tonumber(conky_parse('${updates}'))
 
 
-    local primary_font = 'Fira Code'
-    local primary_font_size = 16
+    local primary_font = 'DejaVu Sans Mono'
+    local primary_font_size = 20
     local primary_font_slant = CAIRO_FONT_SLANT_NORMAL
     local primary_font_face = CAIRO_FONT_WEIGHT_NORMAL
 
@@ -74,12 +75,13 @@ function conky_i3bar() -- luacheck: ignore conky_i3bar
     end -- function draw_component
 
     if updates>3 then -- start drawing
-        draw_component(i3bar_arch_logo, {x = 3, y = 0})
+        draw_component(i3bar_arch_logo, {x = 5, y = -1})
         draw_component(i3bar_i3_workspace_indicator, {x = 54, y = 0})
         draw_component(i3bar_sys_load, {x = 220, y = 0})
-        draw_component(i3bar_gpu_load, {x = 540, y = 0})
-        draw_component(i3bar_date_time, {x = 868, y = 0})
-        draw_component(i3bar_clementine_play, {x = 1124, y = 0})
+        draw_component(i3bar_wireless_stat, {x = 800, y = 0})
+        -- draw_component(i3bar_gpu_load, {x = 540, y = 0})
+        draw_component(i3bar_date_time, {x = 2500, y = 0}) -- make date time align at the screen edge :P
+        -- draw_component(i3bar_arch_logo, {x = 2840, y = 0})
     end
 
 
