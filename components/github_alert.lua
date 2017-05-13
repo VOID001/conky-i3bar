@@ -44,7 +44,6 @@ return function (opt)
                 if date == today then
                     commit = true
                     commit_of_day = commit_of_day + tonumber(v["payload"]["size"])
-                    break
                 end
             end
         end
