@@ -27,6 +27,7 @@ local i3bar_sys_load = require 'components.sys_load'
 -- local i3bar_gpu_load = require 'components.gpu_load'
 local i3bar_date_time = require 'components.date_time'
 local i3bar_clementine_play = require 'components.clementine_play'
+local i3bar_github_alert = require 'components.github_alert'
 
 function conky_i3bar() -- luacheck: ignore conky_i3bar
     if conky_window == nil then
@@ -74,14 +75,19 @@ function conky_i3bar() -- luacheck: ignore conky_i3bar
       }
     end -- function draw_component
 
+    dt = coroutine.create(draw_component) -- make date time align at the screen edge :P
+    al = coroutine.create(draw_component)
+    gh = coroutine.create(draw_component)
+    ws = coroutine.create(draw_component)
+    wi = coroutine.create(draw_component)
+    wi_stat = coroutine.create(draw_component)
     if updates>3 then -- start drawing
-        draw_component(i3bar_arch_logo, {x = 5, y = -1})
-        draw_component(i3bar_i3_workspace_indicator, {x = 54, y = 0})
-        draw_component(i3bar_sys_load, {x = 220, y = 0})
-        draw_component(i3bar_wireless_stat, {x = 800, y = 0})
-        -- draw_component(i3bar_gpu_load, {x = 540, y = 0})
-        draw_component(i3bar_date_time, {x = 2500, y = 0}) -- make date time align at the screen edge :P
-        -- draw_component(i3bar_arch_logo, {x = 2840, y = 0})
+        coroutine.resume(al,i3bar_arch_logo, {x = 5, y = -1})
+        coroutine.resume(wi, i3bar_i3_workspace_indicator, {x = 54, y = 0})
+        coroutine.resume(wi_stat, i3bar_sys_load, {x = 220, y = 0})
+        coroutine.resume(ws, i3bar_wireless_stat, {x = 800, y = 0})
+        coroutine.resume(gh,i3bar_github_alert, {x = 1200, y = 0})
+        coroutine.resume(dt, i3bar_date_time, {x = 2500, y = 0}) 
     end
 
 
