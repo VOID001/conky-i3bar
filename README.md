@@ -38,6 +38,18 @@ trayer --edge bottom \
 # forget about i3bar (｢・ω・)｢
 ```
 
+# Components Configuration
+
+## github-alert
+
+This is a tool that remind you to **commit** to github everyday :P
+
+* Get a Personal Access Token from [here](https://github.com/settings/tokens/new)
+* tick repo, user and notifications
+* then you will get a 40 characters access_token
+* copy the file called config.json.sample to .config.json
+* Modify the **gh_token**, **gh_user** to match your token and username.
+* Then you are all set
 
 
 # Credits
