@@ -5,6 +5,7 @@ local os = require 'os'
 local io = require 'io'
 commit = false
 commit_of_day = 0
+first_time = true
 
 require 'cairo'
 
@@ -27,7 +28,8 @@ return function (opt)
     today = os.date("%Y-%m-%d", os.time() - 8 * 60 * 60)
     tick = tonumber(conky_parse("${updates}"))
 
-    if tick % 150 == 0 then -- do not make request too frequently
+    if first_time or tick % 150 == 0 then -- do not make request too frequently
+        first_time = false
         commit_of_day = 0
         headers, stream = assert(http_request.new_from_uri(gh_endpoint .. "/users/".. gh_cfg["gh_user"] .. "/events?access_token=" .. gh_cfg["gh_token"]):go())
         body = stream:get_body_as_string()
@@ -55,11 +57,11 @@ return function (opt)
         -- Very big warning
         logo = ""
         text = "No commit!"
-        r, g, b, a = 1, 1, 0, 1
+        r, g, b, a = 1, 1, 0, 1 -- yellow here
     else
         logo = ""
-        text = "Well done [" .. commit_of_day .. "]commit(s)."
-        r, g, b, a = 0.9, 0.9, 0.9, 0.9
+        text = "Well done [" .. commit_of_day .. "] commit(s)."
+        r, g, b, a = 0.9, 0.9, 0.9, 0.9 -- white here
     end
     cairo_move_to(opt.cr, xpos, ypos)
     cairo_select_font_face(
@@ -73,7 +75,7 @@ return function (opt)
     cairo_show_text(opt.cr, logo)
     cairo_stroke(opt.cr)
 
-    cairo_move_to(opt.cr, xpos + 55, ypos)
+    cairo_move_to(opt.cr, xpos + 35, ypos)
     cairo_select_font_face(
     opt.cr,
     opt.primary_font,
