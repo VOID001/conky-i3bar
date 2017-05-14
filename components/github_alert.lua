@@ -3,6 +3,7 @@ local json = require 'json'
 local http_request = require 'http.request'
 local os = require 'os'
 local io = require 'io'
+local luadate = require 'date'
 commit = false
 commit_of_day = 0
 first_time = true
@@ -24,8 +25,7 @@ return function (opt)
     -- here we check github for repo stat
     -- only do it once a minute
     --
-    -- github use UTC + 0 So I need to set offset 8 hours behind (I am UTC+8) to get the correct day
-    today = os.date("%Y-%m-%d", os.time() - 8 * 60 * 60)
+    today = os.date("%Y-%m-%d")
     tick = tonumber(conky_parse("${updates}"))
 
     if first_time or tick % 150 == 0 then -- do not make request too frequently
@@ -38,19 +38,21 @@ return function (opt)
         for i, v in ipairs(repos) do
             print(v["type"])
             if v["type"] == "PushEvent" then 
+                print("HH")
                 date = v["created_at"]
-                idx = string.find(date, "T")
-                date = string.sub(date, 0, idx - 1)
-                -- today we have commits
-                print(date)
-                if date == today then
+                -- add 8 hours to github GMT 0 timezone
+                date_convert = luadate(date):addhours(8):fmt("%Y-%m-%d")
+                if date_convert == today then
                     commit = true
                     commit_of_day = commit_of_day + tonumber(v["payload"]["size"])
                 end
             end
         end
     end
-    print(commit)
+
+    -- reset the commit status if no commit today
+    if commit_of_day == 0 then commit = false end
+    -- print(commit)
 
 
     if commit == false then
