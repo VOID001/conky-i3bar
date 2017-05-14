@@ -13,9 +13,9 @@ return function(opt)
     local iface = conky_parse('${gw_iface}')
     local essid = conky_parse('${wireless_essid '.. iface ..'}')
     local quality = conky_parse('${wireless_link_qual_perc '.. iface ..'}')
-    qn = tonumber(quality)
-    
-    wireless_stat = {
+    local qn = tonumber(quality)
+
+    local wireless_stat = {
         zero= "wireless_zero.svg";
         low="wireless_low.svg";
         mid= "wireless_mid.svg";
@@ -28,7 +28,7 @@ return function(opt)
         stat = "low"
     elseif (qn < 80) then
         stat = "mid"
-    else 
+    else
         stat = "full"
     end
 

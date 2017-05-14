@@ -20,6 +20,8 @@ Real conky window as i3bar replacement, works with trayer.
 - luajson (for processing i3's output)
 - Python3 (for python script to get Clementine status)
 - trayer (if you want a systray)
+- lua-date, lua-http (install from luarocks, needed by github_alert)
+- font-awesome (show icons font, needed by github_alert)
 
 
 # Usage
@@ -40,9 +42,10 @@ trayer --edge bottom \
 
 # Components Configuration
 
-## github-alert
+## Github alert
 
 This is a tool that remind you to **commit** to github everyday :P
+
 
 * Get a Personal Access Token from [here](https://github.com/settings/tokens/new)
 * tick repo, user and notifications

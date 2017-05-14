@@ -7,7 +7,7 @@ local i3bar_util = require 'util'
 return function (opt)
     local xpos = opt.x
     local ypos = opt.y
-    local hostpos = 0
+    local hostpos
 
     -- text color
     local r, g, b, a
@@ -22,7 +22,7 @@ return function (opt)
         workspaces[i] = nil
     end
 
-    for i, w in ipairs(new_workspaces) do
+    for _, w in ipairs(new_workspaces) do
         workspaces[w['num']] = {
             ['num'] = w['num'],
             ['visible'] = w['visible'],
@@ -134,7 +134,7 @@ return function (opt)
     cairo_set_font_size(opt.cr, opt.primary_font_size)
     cairo_set_source_rgba(opt.cr, r, g, b, a)
     if present_workspace_number < 4 then
-        cairo_show_text(opt.cr, number_map[present_workspace_number])      
+        cairo_show_text(opt.cr, number_map[present_workspace_number])
     else
     cairo_move_to(opt.cr, xpos - 1, ypos)
     cairo_select_font_face(
